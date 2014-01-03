@@ -8,7 +8,6 @@ angular.module('thinksterFirebaseWithYeomanApp', [
   'firebase'
 ])
   .config(function ($routeProvider) {
-    /*global Firebase */
     $routeProvider
       .when('/', {
         templateUrl: 'views/default.html',
@@ -18,19 +17,19 @@ angular.module('thinksterFirebaseWithYeomanApp', [
         templateUrl: 'views/users/signin.html'
       })
       .when('/signup',  {
-        templateUrl: 'views/users/signup.html'
+        templateUrl: 'views/users/signup.html',
+        controller: 'SignupCtrl'
       })
       .otherwise({
         redirectTo: '/'
       });
   })
   //  authentication
-  .run(['$firebaseAuth', 'FBURL', '$rootScope',
-    function($firebaseAuth, FBURL, $rootScope) {
-      $firebaseAuth(new Firebase(FBURL), {
-        path: '/signin'
-      });
+  .run(['FBURL','LOGINPATH','$rootScope',
+    function(FBURL, LOGINPATH, $rootScope) {
       $rootScope.FBURL = FBURL;
-    }
-  ])
-  .constant('FBURL','https://firefootballtutorial.firebaseio.com/');
+      $rootScope.LOGINPATH = LOGINPATH;
+    }]
+  )
+  .constant('FBURL','https://firefootballtutorial.firebaseio.com/')
+  .constant('LOGINPATH',{ path: '/signin' });
