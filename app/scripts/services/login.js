@@ -1,19 +1,23 @@
 'use strict';
 
 angular.module('thinksterFirebaseWithYeomanApp')
-  .factory('login', function ($firebaseAuth, profileCreator, $location, $rootScope) {
+  .factory('loginService', function ($firebaseAuth, profileCreator, $location, $rootScope) {
+    /*global Firebase*/
     return {
       login: function(email, pass, redirect, callback) {
-        var p = $firebaseAuth.$login('password', {
+        $firebaseAuth(new Firebase($rootScope.FBURL), $rootScope.LOGINPATH)
+        .$login('password', {
           email: email,
           password: pass,
           rememberMe: true
-        });
-        p.then(function(user) {
+        })
+        .then(function(user) {
           if( redirect ) {
             $location.path(redirect);
           }
-          callback && callback(null, user);
+          if(callback){
+            callback(null, user);
+          }
         }, callback);
       },
       logout: function(redirectPath) {
