@@ -14,7 +14,8 @@ angular.module('thinksterFirebaseWithYeomanApp', [
         controller: 'MainCtrl'
       })
       .when('/signin',  {
-        templateUrl: 'views/users/signin.html'
+        templateUrl: 'views/users/signin.html',
+        controller: 'SigninCtrl'
       })
       .when('/signup',  {
         templateUrl: 'views/users/signup.html',
